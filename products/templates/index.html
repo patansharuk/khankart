@@ -1,8 +1,17 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %} {% include 'navbar.html' %}
 
-{% block content %}
-{% include 'navbar.html' %}
-{% for each in products %}
-    <h1>{{each}}</h1>
-{% endfor %}
+<form action="" method="post">
+  {% csrf_token %}
+  <button type="submit">Add Product</button>
+</form>
+
+<div class="container">
+  <div class="row">
+    {% for product in products %}
+    <div class="col-4">
+      {% include 'components/product.html' with product=product %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
 {% endblock content %}

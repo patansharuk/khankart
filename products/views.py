@@ -1,6 +1,6 @@
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
+from .models import Product
 
 
 class Authenticate(TemplateView):
@@ -13,8 +13,17 @@ class Authenticate(TemplateView):
 
 class Products(TemplateView):
     def get(self, request):
-        products = [1,2,3]
+        products = Product.objects.all()
+        print(products)
         return render(request, 'index.html', {'products': products})
+    
+    def post(self, request):
+        product = Product(title='title', description='this description', price=100, updated_date='2012-01-01')
+        product.save()
+        if(product.id):
+            return redirect('root_path')
+        else:
+            return render(request, 'index.html',{})
 
 
 class MiscellaneousPages:
