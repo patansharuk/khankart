@@ -1,5 +1,5 @@
 from django.urls import path, re_path
-from .views import Products, MiscellaneousPages
+from .views import Products, MiscellaneousPages, hello_world
 
 urlpatterns = [
     path('', Products.as_view(), name='root_path'),
@@ -7,4 +7,8 @@ urlpatterns = [
 
 urlpatterns += [
     re_path(r'.*', MiscellaneousPages.not_found, name='not_found_path')
+]
+
+urlpatterns += [
+    path('hello/',hello_world,name='hello-world')
 ]

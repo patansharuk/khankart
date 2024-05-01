@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from .models import Product
 from django.contrib.auth.mixins import LoginRequiredMixin
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 
 class Products(LoginRequiredMixin, TemplateView):
@@ -22,3 +24,8 @@ class Products(LoginRequiredMixin, TemplateView):
 class MiscellaneousPages:
     def not_found(request):
         return render(request, 'not_found.html', {})
+
+
+@api_view(['GET'])
+def hello_world(request):
+    return Response({'message': 'Hello, World!'})

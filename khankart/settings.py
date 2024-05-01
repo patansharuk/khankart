@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'products',
     'django.contrib.admin',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +129,10 @@ LOGIN_REDIRECT_URL = '/products/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Basic': {
+            'type': 'basic'
+        }
+    }
+}
