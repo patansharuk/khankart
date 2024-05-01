@@ -27,7 +27,10 @@
           <a class="nav-link" href="#">Pricing</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" aria-disabled="true">Logout</a>
+          <form action="/accounts/logout/" method="post">
+            {% csrf_token %}
+            <button type="submit">Logout</a>
+          </form>
         </li>
       </ul>
     </div>

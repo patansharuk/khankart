@@ -1,20 +1,24 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from .models import Product
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class Authenticate(TemplateView):
+
+class Login(TemplateView):
     def get(self, request):
         return render(request, 'login.html', {})
 
     def post(self, request):
+        return redirect('root_path')
+    
+class Logout(TemplateView):
+    def get(self, request):
         return redirect('login_path')
 
-
-class Products(TemplateView):
+class Products(LoginRequiredMixin, TemplateView):
     def get(self, request):
         products = Product.objects.all()
-        print(products)
         return render(request, 'index.html', {'products': products})
     
     def post(self, request):
