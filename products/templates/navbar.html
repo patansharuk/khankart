@@ -18,18 +18,18 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active" aria-current="page" href="">Products</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
+          <a class="nav-link" href="">Cart</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
+          <a class="nav-link" href="">Offers</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item d-flex align-items-center">
           <form action="/accounts/logout/" method="post">
             {% csrf_token %}
-            <button type="submit">Logout</a>
+            <button type="submit" class="btn btn-danger">Logout</a>
           </form>
         </li>
       </ul>
