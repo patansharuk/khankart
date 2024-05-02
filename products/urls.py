@@ -1,14 +1,19 @@
-from django.urls import path, re_path
-from .views import Products, MiscellaneousPages, hello_world
+from django.urls import path, re_path, include
+from .views import Products, MiscellaneousPages, ProductsViewSet
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register(r'', ProductsViewSet, basename='prod' )
+
 
 urlpatterns = [
-    path('', Products.as_view(), name='root_path'),
+    path('',include(router.urls))
+]
+
+urlpatterns += [
+    path('home', Products.as_view(), name='root_path'),
 ]
 
 urlpatterns += [
     re_path(r'.*', MiscellaneousPages.not_found, name='not_found_path')
-]
-
-urlpatterns += [
-    path('hello/',hello_world,name='hello-world')
 ]

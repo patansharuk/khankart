@@ -4,6 +4,8 @@ from .models import Product
 from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import viewsets
+from .serializers import ProductSerializer
 
 
 class Products(LoginRequiredMixin, TemplateView):
@@ -26,6 +28,6 @@ class MiscellaneousPages:
         return render(request, 'not_found.html', {})
 
 
-@api_view(['GET'])
-def hello_world(request):
-    return Response({'message': 'Hello, World!'})
+class ProductsViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
