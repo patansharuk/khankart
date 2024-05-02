@@ -3,7 +3,8 @@ from django.views.generic import TemplateView
 from .models import Product
 from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework import viewsets
-from .serializers import ProductSerializer
+from .serializers import ProductSerializer, UserSerializer
+from django.contrib.auth.models import User
 
 
 class Products(LoginRequiredMixin, TemplateView):
@@ -29,3 +30,7 @@ class MiscellaneousPages:
 class ProductsViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+class UserViewSet(viewsets.ModelViewSet, User):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
