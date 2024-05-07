@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 from ..models import Product
 from django.contrib.auth.mixins import LoginRequiredMixin
 from datetime import datetime
+from django.core.paginator import Paginator
 
 
 class Perm:
@@ -21,12 +22,17 @@ class Products(LoginRequiredMixin, TemplateView):
     def get(self, request):
         user_perm = Perm(request)
         message = ''
+        page_obj = {}
         if (user_perm.can_view_products):
             products = Product.objects.all()
+            paginator = Paginator(products, 6)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
         else:
             products = []
             message = 'You dont have permission to view products.'
-        return render(request, 'products/index.html', {'products': products, 'message': message, 'user_perm': user_perm})
+
+        return render(request, 'products/index.html', {'message': message, 'user_perm': user_perm, 'page_obj': page_obj})
 
 
 class CreateProduct(Products):
@@ -38,9 +44,7 @@ class CreateProduct(Products):
         title = request.POST['title']
         description = request.POST['description']
         price = request.POST['price']
-        updated_date = datetime.now().date().strftime('%Y-%m-%d')
-        print(updated_date)
-        print(type(updated_date))
+        updated_date = datetime.now()
         product = Product(title=title, description=description,
                           price=price, updated_date=updated_date)
         product.save()
