@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
-from ..models import Product
+from ..models import Product, Cart
 from django.contrib.auth.mixins import LoginRequiredMixin
 from datetime import datetime
 from django.core.paginator import Paginator
@@ -25,6 +25,7 @@ class Products(LoginRequiredMixin, TemplateView):
         page_obj = {}
         if (user_perm.can_view_products):
             products = Product.objects.all()
+            cart_products = Cart.objects.values_list('product_id', flat=True)
             paginator = Paginator(products, 6)
             page_number = request.GET.get('page')
             page_obj = paginator.get_page(page_number)
@@ -32,7 +33,7 @@ class Products(LoginRequiredMixin, TemplateView):
             products = []
             message = 'You dont have permission to view products.'
 
-        return render(request, 'products/index.html', {'message': message, 'user_perm': user_perm, 'page_obj': page_obj})
+        return render(request, 'products/index.html', {'message': message, 'user_perm': user_perm, 'page_obj': page_obj, 'cart_products': cart_products})
 
 
 class CreateProduct(Products):

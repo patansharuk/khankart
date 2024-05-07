@@ -1,34 +1,46 @@
 <section>
-    <div class="py-1">
-      <div class="justify-content-center">
-        <div class="">
-          <div class="card text-black">
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/3.webp"
-              class="card-img-top" alt="Apple Computer" />
-            <div class="card-body">
-              <div class="text-center">
-                <h5 class="card-title">{{ product.title|title }}</h5>
-                <p class="text-muted mb-4">{{ product.description|truncatechars:30 }}</p>
-              </div>
-              <div class="d-flex justify-content-between total font-weight-bold mt-4">
-                <span>Total</span><span>$ {{ product.price|floatformat:"-3g" }}</span>
-              </div>
-              <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                {% if user_perm.can_delete_products %}
-                  <form action="/products/{{product.id}}/delete" method="get">
-                    <button class="btn btn-danger mt-2" type="submit">Delete</button>
-                  </form>
-                {% endif %}
-                {% if user_perm.can_change_products %}
-                  <form action="/products/{{product.id}}/change" method="get">
-                    <button class="btn btn-warning mt-2" type="submit">Edit</button>
-                  </form>
-                {% endif %}
-                <a class="btn bg-dark text-light mt-2" href="{% url 'view_product_path' product.id %}">Read More</a>
-              </div>
+  <div class="py-1">
+    <div class="justify-content-center">
+      <div class="">
+        <div class="card text-black">
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/3.webp" class="card-img-top"
+            alt="Apple Computer" />
+          <div class="card-body">
+            <div class="text-center">
+              <h5 class="card-title">{{ product.title|title }}</h5>
+              <p class="text-muted mb-4">{{ product.description|truncatechars:30 }}</p>
+            </div>
+            <div class="d-flex justify-content-between total font-weight-bold mt-4">
+              <span>Total</span><span>$ {{ product.price|floatformat:"-3g" }}</span>
+            </div>
+            <hr />
+            <form action="/products/home/cart" method="post">
+              {% csrf_token %}
+              {% if product.id not in cart_products %}
+              <button class="btn btn-success mt-2" type="submit">Add to Cart</button>
+              {% else %}
+              <button class="btn btn-success mt-2" type="submit">+</button>
+              <button class="btn btn-success mt-2" type="submit">0</button>
+              <button class="btn btn-success mt-2" type="submit">-</button>
+              {% endif %}
+            </form>
+            <hr />
+            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+              {% if user_perm.can_delete_products %}
+              <form action="/products/{{product.id}}/delete" method="get">
+                <button class="btn btn-danger mt-2" type="submit">Delete</button>
+              </form>
+              {% endif %}
+              {% if user_perm.can_change_products %}
+              <form action="/products/{{product.id}}/change" method="get">
+                <button class="btn btn-warning mt-2" type="submit">Edit</button>
+              </form>
+              {% endif %}
+              <a class="btn bg-dark text-light mt-2" href="{% url 'view_product_path' product.id %}">Read More</a>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
