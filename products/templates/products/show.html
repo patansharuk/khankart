@@ -17,8 +17,16 @@
           </p>
         </div>
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-            {% if user_perm.can_delete_products %}<a class="btn btn-danger mt-2" href="{% url 'delete_product_path' product.id %}">Delete</a>{% endif %}
-            {% if user_perm.can_change_products %}<a class="btn btn-warning mt-2" href="{% url 'edit_product_path' product.id %}">Edit</a>{% endif %}
+            {% if user_perm.can_delete_products %}
+              <form action="/products/{{product.id}}/delete" method="get">
+                <button class="btn btn-danger mt-2" type="submit">Delete</button>
+              </form>
+            {% endif %}
+            {% if user_perm.can_change_products %}
+              <form action="/products/{{product.id}}/change" method="get">
+                <button class="btn btn-warning mt-2" type="submit">Edit</button>
+              </form>
+            {% endif %}
             <a class="btn bg-dark text-light mt-2" href="{% url 'root_path' %}">Back</a>
         </div>
       </div>

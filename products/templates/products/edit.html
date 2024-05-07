@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block content %}
 <div class="container">
   <div class="row mt-5">
-    <form class="col-lg-6 m-auto" action="/products/{{ product.id }}/update" method="post">
+    <form class="col-lg-6 m-auto" action="/products/{{ product.id }}/change" method="post">
       {% csrf_token %}
       <div class="mb-5">
         <h2 class="text-center">Edit Registration</h2>

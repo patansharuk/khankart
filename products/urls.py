@@ -1,5 +1,6 @@
 from django.urls import path, re_path, include
-from .views import Products, MiscellaneousPages, ProductsViewSet, UserViewSet, update_product, view_product, delete_product, new_product, edit_product , add_product
+from .views.products import Products, MiscellaneousPages, CreateProduct, UpdateProduct, ViewProduct, DeleteProduct
+from .views.swagger import ProductsViewSet, UserViewSet
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -13,12 +14,10 @@ urlpatterns = [
 
 urlpatterns += [
     path('home', Products.as_view(), name='root_path'),
-    path('new', new_product, name='new_product_path'),
-    path('add', add_product, name='add_product_path'),
-    path('<int:product_id>/show', view_product, name="view_product_path"),
-    path('<int:product_id>/edit', edit_product, name="edit_product_path"),
-    path('<int:product_id>/update', update_product, name='update_product_path'),
-    path('<int:product_id>/delete', delete_product, name="delete_product_path"),
+    path('add', CreateProduct.as_view(), name='add_product_path'),
+    path('<int:product_id>/change', UpdateProduct.as_view(), name='change_product_path'),
+    path('<int:product_id>/show', ViewProduct.as_view(), name="view_product_path"),
+    path('<int:product_id>/delete', DeleteProduct.as_view(), name="delete_product_path"),
 ]
 
 urlpatterns += [

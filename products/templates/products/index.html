@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block content %} {% include 'navbar.html' %}
 <!-- add product btn -->
 {% if user_perm.can_add_products %}
-<a href="{% url 'new_product_path' %}" class="btn btn-primary m-1"
+<a href="{% url 'add_product_path' %}" class="btn btn-primary m-1"
   >Add Product</a
 >
 {% endif %}
