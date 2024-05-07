@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% include 'navbar.html' %}
+
+<!-- displaying product details -->
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 m-auto">
+      <div class="card mb-3">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/3.webp" class="card-img-top" alt="product-image" />
+        <div class="card-body">
+          <h5 class="card-title">{{ product.title|title }}</h5>
+          <p class="card-text">{{ product.description }}</p>
+          <p class="card-text">
+            <small class="text-body-secondary"
+              >{{ product.updated_date|timesince:current_time }} ago</small
+            >
+          </p>
+        </div>
+        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+            {% if user_perm.can_delete_products %}<a class="btn btn-danger mt-2" href="{% url 'delete_product_path' product.id %}">Delete</a>{% endif %}
+            {% if user_perm.can_change_products %}<a class="btn btn-warning mt-2" href="{% url 'edit_product_path' product.id %}">Edit</a>{% endif %}
+            <a class="btn bg-dark text-light mt-2" href="{% url 'root_path' %}">Back</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

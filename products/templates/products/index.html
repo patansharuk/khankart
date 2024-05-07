@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% block content %} {% include 'navbar.html' %}
+<!-- add product btn -->
+{% if user_perm.can_add_products %}
+<a href="{% url 'new_product_path' %}" class="btn btn-primary m-1"
+  >Add Product</a
+>
+{% endif %}
+
+<!-- listing products -->
+{% if user_perm.can_view_products %}
+<!-- if empty products then display error -->
+{% if not products %}
+<div class="alert alert-warning" role="alert">Products not found.</div>
+{% else %}
+<div class="container">
+  <div class="row">
+    {% for product in products %}
+    <div class="col-4">
+      {% include 'components/product.html' with product=product %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+<!-- display unauthorised message -->
+{% else %}
+<div class="alert alert-warning" role="alert">{{message}}</div>
+{% endif %} {% endblock content %}
